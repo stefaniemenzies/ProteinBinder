@@ -1,0 +1,3 @@
+git+https://github.com/sokrypton/ColabDesign.git
+pyrosettacolabsetup
+py3Dmol

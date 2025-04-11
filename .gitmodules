@@ -1,0 +1,3 @@
+[submodule "code/bindcraft/bindcraft"]
+	path = code/bindcraft/bindcraft
+	url = https://github.com/martinpacesa/BindCraft
