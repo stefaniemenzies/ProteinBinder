@@ -15,9 +15,6 @@ args = getArgs()
 #         "filters":filter_settings_path,
 #         "advanced":advanced_settings_path}
 
-# Check if JAX-capable GPU is available, otherwise exit
-check_jax_gpu()
-
 # perform checks of input setting files
 settings_path, filters_path, advanced_path = (args["settings"], args["filters"], args["advanced"])
 
@@ -76,6 +73,17 @@ continue_designing = True
 continue_designing = not (check_n_trajectories(design_paths, advanced_settings) or check_accepted_designs(design_paths, mpnn_csv, final_labels, final_csv, advanced_settings, target_settings, design_labels))
 
 trajectory_dirs = ["Trajectory", "Trajectory/Relaxed", "Trajectory/LowConfidence", "Trajectory/Clashing"]
+
+
+
+
+
+
+
+
+# Check if JAX-capable GPU is available, otherwise exit
+check_jax_gpu()
+
 
 
 # Initialize wandb logger
@@ -389,7 +397,11 @@ while continue_designing:
                             print(mpnn_design_name+" passed all filters")
                             accepted_mpnn += 1
                             accepted_designs += 1
-
+                            ###### NOTE TO STEF ###### 
+                            #because a lot of your code is compute bottle necked, you could speed it up a lot by just keeping note of the filenames to move, and moving them all together later, 
+                            #rather than mid-flow 
+                            ##########################
+                            
                             # copy designs to accepted folder
                             shutil.copy(best_model_pdb, design_paths["Accepted"])
 
@@ -420,9 +432,8 @@ while continue_designing:
 
                             for column in filter_conditions:
                                 base_column = column
-                                for prefix in special_prefixes:
-                                    if column.startswith(prefix):
-                                        base_column = column.split('_', 1)[1]
+                                if any(column.startswith(prefix) for prefix in special_prefixes):
+                                    base_column = column.split('_', 1)[1]
 
                                 if base_column not in incremented_columns:
                                     failure_df[base_column] = failure_df[base_column] + 1
