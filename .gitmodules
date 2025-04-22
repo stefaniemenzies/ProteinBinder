@@ -1,3 +1,6 @@
 [submodule "code/bindcraft/bindcraft"]
 	path = code/bindcraft/bindcraft
 	url = https://github.com/martinpacesa/BindCraft
+[submodule "code/diffusion/RFdiffusion"]
+	path = code/diffusion/RFdiffusion
+	url = https://github.com/sokrypton/RFdiffusion.git
