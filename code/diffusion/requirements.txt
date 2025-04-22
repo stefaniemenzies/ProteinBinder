@@ -6,8 +6,14 @@ pyrsistent
 pynvml
 decorator
 git+https://github.com/NVIDIA/dllogger#egg=dllogger
-dgl==2.0.0 -f https://data.dgl.ai/wheels/cu121/repo.html
+dgl==2.1.0 -f https://data.dgl.ai/wheels/cu121/repo.html
 e3nn==0.5.5
 opt_einsum_fx
 git+https://github.com/sokrypton/ColabDesign.git
-git+https://github.com/sokrypton/RFdiffusion.git -e git+https://github.com/sokrypton/RFdiffusion.git#egg=RFdiffusion&subdirectory=env/SE3Transformer
+
+#taken from RFdiffusion/env/SE3Transformer/requirements.txt
+e3nn==0.5.5
+wandb==0.12.0
+pynvml==11.0.0
+git+https://github.com/NVIDIA/dllogger#egg=dllogger
+decorator==5.1.0
