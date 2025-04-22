@@ -1,12 +1,10 @@
 
-from google.colab import files
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 from IPython.display import display, HTML
-import ipywidgets as widgets
 import py3Dmol
-
+import os
 from inference.utils import parse_pdb
 from colabdesign.rf.utils import get_ca
 from colabdesign.rf.utils import fix_contigs, fix_partial_contigs, fix_pdb, sym_it
@@ -89,9 +87,9 @@ def run(command, steps, num_designs=1, visual="none"):
     else:
       return True
 
-  run_output = widgets.Output()
-  progress = widgets.FloatProgress(min=0, max=1, description='running', bar_style='info')
-  display(widgets.VBox([progress, run_output]))
+  # run_output = widgets.Output()
+  # progress = widgets.FloatProgress(min=0, max=1, description='running', bar_style='info')
+  # display(widgets.VBox([progress, run_output]))
 
   # clear previous run
   for n in range(steps):
@@ -107,7 +105,7 @@ def run(command, steps, num_designs=1, visual="none"):
       for n in range(steps):
         wait = True
         while wait and not fail:
-          time.sleep(0.1)
+          # time.sleep(0.1)
           if os.path.isfile(f"/dev/shm/{n}.pdb"):
             pdb_str = open(f"/dev/shm/{n}.pdb").read()
             if pdb_str[-3:] == "TER":
@@ -118,15 +116,15 @@ def run(command, steps, num_designs=1, visual="none"):
             fail = True
 
         if fail:
-          progress.bar_style = 'danger'
-          progress.description = "failed"
+          # progress.bar_style = 'danger'
+          # progress.description = "failed"
           break
 
         else:
-          progress.value = (n+1) / steps
+          # progress.value = (n+1) / steps
           if visual != "none":
-            with run_output:
-              run_output.clear_output(wait=True)
+            # with run_output:
+              # run_output.clear_output(wait=True)
               if visual == "image":
                 xyz, bfact = get_ca(f"/dev/shm/{n}.pdb", get_bfact=True)
                 fig = plt.figure()
@@ -143,17 +141,36 @@ def run(command, steps, num_designs=1, visual="none"):
         if os.path.exists(f"/dev/shm/{n}.pdb"):
           os.remove(f"/dev/shm/{n}.pdb")
       if fail:
-        progress.bar_style = 'danger'
-        progress.description = "failed"
+        # progress.bar_style = 'danger'
+        # progress.description = "failed"
         break
 
     while is_process_running(pid):
-      time.sleep(0.1)
+      # time.sleep(0.1)
 
   except KeyboardInterrupt:
-    os.kill(pid, signal.SIGTERM)
-    progress.bar_style = 'danger'
-    progress.description = "stopped"
+    # os.kill(pid, signal.SIGTERM)
+    # progress.bar_style = 'danger'
+    # progress.description = "stopped"
+    print("stopped")
+    return None
+  except Exception as e:
+    # os.kill(pid, signal.SIGTERM)
+    # progress.bar_style = 'danger'
+    # progress.description = "failed"
+    print("failed")
+    print(e)
+    return None
+  finally:
+    # progress.value = 1
+    # run_output.clear_output(wait=True)
+    # run_output.close()
+    if is_process_running(pid):
+      os.kill(pid, 9)
+    # progress.bar_style = 'success'
+    # progress.description = "done"
+    print("done")
+    return True
 
 def run_diffusion(contigs, path, pdb=None, iterations=50,
 
