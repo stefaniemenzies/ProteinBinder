@@ -1,4 +1,4 @@
-from argparse import getArgs
+from argparser import getArgs
 from utils import *
 from bindcraft.functions import *
 import datetime

@@ -2,7 +2,9 @@ from argparser import *
 import os
 from utils import *
 
-
+import time
+import random
+import string
 import sys
 
 from colabdesign.mpnn import mk_mpnn_model
@@ -23,9 +25,9 @@ if not os.path.isdir("outputs"):
   os.makedirs("outputs")
 
 
-path = name
+path = args.name
 while os.path.exists(f"outputs/{path}_0.pdb"):
-  path = name + "_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+  path = args.name + "_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
 flags = {"contigs":args.contigs,
          "pdb":args.pdb,
@@ -53,23 +55,7 @@ if not os.path.isfile("params/done.txt"):
   while not os.path.isfile("params/done.txt"):
     time.sleep(5)
 
-
-if num_designs > 1:
-  output = widgets.Output()
-  def on_change(change):
-    if change['name'] == 'value':
-      with output:
-        output.clear_output(wait=True)
-        plot_pdb(change['new'])
-  dropdown = widgets.Dropdown(
-      options=[(f'{k}',k) for k in range(num_designs)],
-      value=0, description='design:',
-  )
-  dropdown.observe(on_change)
-  display(widgets.VBox([dropdown, output]))
-  with output:
-    plot_pdb(dropdown.value)
-else:
+ 
   plot_pdb()
 
 
@@ -160,8 +146,8 @@ sampling_temp = args.mpnn_sampling_temp
 mpnn_model = mk_mpnn_model(weights="soluble" if args.use_solubleMPNN else "original")
 outs = []
 pdbs = []
-for m in range(num_designs):
-    if num_designs == 0:
+for m in range(args.num_designs):
+    if args.num_designs == 0:
         pdb_filename = pdb
     else:
         pdb_filename = pdb.replace("_0.pdb",f"_{m}.pdb")

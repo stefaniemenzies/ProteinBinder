@@ -1,3 +1,5 @@
 git+https://github.com/sokrypton/ColabDesign.git
-pyrosettacolabsetup
+pyrosetta-installer 
 py3Dmol
+IPython
+numpy==1.23.5

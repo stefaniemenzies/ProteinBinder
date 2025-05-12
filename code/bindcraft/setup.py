@@ -1,11 +1,5 @@
 #@title Installation
-import os, time, gc, io
-import contextlib
-import json
-from datetime import datetime
-from ipywidgets import HTML, VBox
-from IPython.display import display
-import subprocess
+import os
 import tarfile
 def install_bindcraft_components():
     """
@@ -50,6 +44,9 @@ def install_bindcraft_components():
         print("BindCraft installation is finished, ready to run!")
     else:
         print("BindCraft components already installed, ready to run!")
+
+    import pyrosetta_installer
+    pyrosetta_installer.install_pyrosetta(serialization=True)
 
 if __name__ == "__main__":
     install_bindcraft_components()

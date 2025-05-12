@@ -56,7 +56,7 @@ def view_top_k_designs(path=".",k=20):
 
 #@title Display animation
 import glob
-from IPython.display import HTML#@title Top Design Display
+# from IPython.display import HTML#@title Top Design Display
 import py3Dmol
 
 def visualize_top_design(design_path):
@@ -79,18 +79,18 @@ def visualize_top_design(design_path):
     view.show()
 
 
-def display_top_design_animation(design_path):
-    """
-    Display the animation of the top-ranked design.
+# def display_top_design_animation(design_path):
+#     """
+#     Display the animation of the top-ranked design.
 
-    Args:
-        design_path (str): Path to the design directory.
-    """
-    top_design_dir = os.path.join(design_path, 'Accepted', 'Ranked')
-    top_design_pdb = glob.glob(os.path.join(top_design_dir, '1_*.pdb'))[0]
+#     Args:
+#         design_path (str): Path to the design directory.
+#     """
+#     top_design_dir = os.path.join(design_path, 'Accepted', 'Ranked')
+#     top_design_pdb = glob.glob(os.path.join(top_design_dir, '1_*.pdb'))[0]
 
-    top_design_name = os.path.basename(top_design_pdb).split('1_', 1)[1].split('_mpnn')[0]
-    top_design_animation = os.path.join(design_path, 'Accepted', 'Animation', f"{top_design_name}.html")
+#     top_design_name = os.path.basename(top_design_pdb).split('1_', 1)[1].split('_mpnn')[0]
+#     top_design_animation = os.path.join(design_path, 'Accepted', 'Animation', f"{top_design_name}.html")
 
-    # Show animation
-    return HTML(top_design_animation)
+#     # Show animation
+#     return HTML(top_design_animation)

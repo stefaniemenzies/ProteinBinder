@@ -2,15 +2,15 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from IPython.display import display, HTML
 import py3Dmol
 import os
-from inference.utils import parse_pdb
+from RFdiffusion.inference.utils import parse_pdb
+from IPython.display import display, HTML
 from colabdesign.rf.utils import get_ca
 from colabdesign.rf.utils import fix_contigs, fix_partial_contigs, fix_pdb, sym_it
 from colabdesign.shared.protein import pdb_to_string
 from colabdesign.shared.plot import plot_pseudo_3D
-
+import time
 def get_pdb(pdb_code=None):
   if pdb_code is None or pdb_code == "":
     upload_dict = files.upload()
@@ -146,7 +146,7 @@ def run(command, steps, num_designs=1, visual="none"):
         break
 
     while is_process_running(pid):
-      # time.sleep(0.1)
+        time.sleep(0.1)
 
   except KeyboardInterrupt:
     # os.kill(pid, signal.SIGTERM)
