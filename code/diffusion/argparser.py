@@ -23,7 +23,7 @@ def parse_args():
     parser.add_argument("--use_beta_model", action="store_true", help="Use beta model for better SSE balance.")
 
     # ProteinMPNN settings
-    parser.add_argument("--num_seqs", type=int, choices=[1, 2, 4, 8, 16, 32, 64], default=8, help="Number of sequences to generate.")
+    parser.add_argument("--num_seqs", type=int, choices=[1, 2, 4, 8, 16, 32, 64], default=2, help="Number of sequences to generate.")
     parser.add_argument("--mpnn_sampling_temp", type=float, default=0.1, help="Sampling temperature for ProteinMPNN.")
     parser.add_argument("--rm_aa", type=str, default="C", help="Amino acids to exclude.")
     parser.add_argument("--use_solubleMPNN", action="store_true", help="Use weights trained only on soluble proteins.")

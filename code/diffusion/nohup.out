@@ -1,0 +1,629 @@
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.5 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 20, in <module>
+    import torch
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/__init__.py", line 1382, in <module>
+    from .functional import *  # noqa: F403
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/functional.py", line 7, in <module>
+    import torch.nn.functional as F
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/__init__.py", line 1, in <module>
+    from .modules import *  # noqa: F403
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+    from .transformer import TransformerEncoder, TransformerDecoder, \
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+    device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+  device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+[2025-05-15 10:30:55,684][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/cuda/__init__.py:611: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+This is inf_conf.ckpt_path
+/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+Assembling -model, -diffuser and -preprocess configs from checkpoint
+USING MODEL CONFIG: self._conf[model][n_extra_block] = 4
+USING MODEL CONFIG: self._conf[model][n_main_block] = 32
+USING MODEL CONFIG: self._conf[model][n_ref_block] = 4
+USING MODEL CONFIG: self._conf[model][d_msa] = 256
+USING MODEL CONFIG: self._conf[model][d_msa_full] = 64
+USING MODEL CONFIG: self._conf[model][d_pair] = 128
+USING MODEL CONFIG: self._conf[model][d_templ] = 64
+USING MODEL CONFIG: self._conf[model][n_head_msa] = 8
+USING MODEL CONFIG: self._conf[model][n_head_pair] = 4
+USING MODEL CONFIG: self._conf[model][n_head_templ] = 4
+USING MODEL CONFIG: self._conf[model][d_hidden] = 32
+USING MODEL CONFIG: self._conf[model][d_hidden_templ] = 32
+USING MODEL CONFIG: self._conf[model][p_drop] = 0.15
+USING MODEL CONFIG: self._conf[model][SE3_param_full] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 8, 'l0_out_features': 8, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 32}
+USING MODEL CONFIG: self._conf[model][SE3_param_topk] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 64, 'l0_out_features': 64, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 64}
+USING MODEL CONFIG: self._conf[model][d_time_emb] = 0
+USING MODEL CONFIG: self._conf[model][d_time_emb_proj] = 10
+USING MODEL CONFIG: self._conf[model][freeze_track_motif] = False
+USING MODEL CONFIG: self._conf[model][use_motif_timestep] = True
+USING MODEL CONFIG: self._conf[diffuser][T] = 50
+USING MODEL CONFIG: self._conf[diffuser][b_0] = 0.01
+USING MODEL CONFIG: self._conf[diffuser][b_T] = 0.07
+USING MODEL CONFIG: self._conf[diffuser][schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][so3_type] = igso3
+USING MODEL CONFIG: self._conf[diffuser][crd_scale] = 0.25
+USING MODEL CONFIG: self._conf[diffuser][so3_schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][min_b] = 1.5
+USING MODEL CONFIG: self._conf[diffuser][max_b] = 2.5
+USING MODEL CONFIG: self._conf[diffuser][min_sigma] = 0.02
+USING MODEL CONFIG: self._conf[diffuser][max_sigma] = 1.5
+USING MODEL CONFIG: self._conf[preprocess][sidechain_input] = False
+USING MODEL CONFIG: self._conf[preprocess][motif_sidechain_input] = True
+USING MODEL CONFIG: self._conf[preprocess][d_t1d] = 22
+USING MODEL CONFIG: self._conf[preprocess][d_t2d] = 44
+USING MODEL CONFIG: self._conf[preprocess][prob_self_cond] = 0.5
+USING MODEL CONFIG: self._conf[preprocess][str_self_cond] = True
+USING MODEL CONFIG: self._conf[preprocess][predict_previous] = False
+WARNING: You are changing diffuser.T from the value this model was trained with. Are you sure you know what you are doing?
+[2025-05-15 10:31:00,200][inference.model_runners][INFO] - Loading checkpoint.
+[2025-05-15 10:31:00,464][diffusion][INFO] - Using cached IGSO3.
+Successful diffuser __init__
+Error executing job with overrides: ['inference.output_prefix=outputs/test', 'inference.num_designs=1', 'diffuser.T=50', 'contigmap.contigs=[100-100]', 'inference.dump_pdb=True', 'inference.dump_pdb_path=/dev/shm']
+Traceback (most recent call last):
+  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 46, in main
+    sampler = iu.sampler_selector(conf)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/utils.py", line 526, in sampler_selector
+    sampler = model_runners.SelfConditioning(conf)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 43, in __init__
+    self.initialize(conf)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 142, in initialize
+    self.target_feats = iu.process_target(self.inf_conf.input_pdb, parse_hetatom=True, center=False)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/utils.py", line 630, in process_target
+    xyz = torch.from_numpy(target_struct["xyz"] - ca_center)
+RuntimeError: Numpy is not available
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[2025-05-15 10:33:08,953][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/cuda/__init__.py:611: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+This is inf_conf.ckpt_path
+/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+Assembling -model, -diffuser and -preprocess configs from checkpoint
+USING MODEL CONFIG: self._conf[model][n_extra_block] = 4
+USING MODEL CONFIG: self._conf[model][n_main_block] = 32
+USING MODEL CONFIG: self._conf[model][n_ref_block] = 4
+USING MODEL CONFIG: self._conf[model][d_msa] = 256
+USING MODEL CONFIG: self._conf[model][d_msa_full] = 64
+USING MODEL CONFIG: self._conf[model][d_pair] = 128
+USING MODEL CONFIG: self._conf[model][d_templ] = 64
+USING MODEL CONFIG: self._conf[model][n_head_msa] = 8
+USING MODEL CONFIG: self._conf[model][n_head_pair] = 4
+USING MODEL CONFIG: self._conf[model][n_head_templ] = 4
+USING MODEL CONFIG: self._conf[model][d_hidden] = 32
+USING MODEL CONFIG: self._conf[model][d_hidden_templ] = 32
+USING MODEL CONFIG: self._conf[model][p_drop] = 0.15
+USING MODEL CONFIG: self._conf[model][SE3_param_full] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 8, 'l0_out_features': 8, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 32}
+USING MODEL CONFIG: self._conf[model][SE3_param_topk] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 64, 'l0_out_features': 64, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 64}
+USING MODEL CONFIG: self._conf[model][d_time_emb] = 0
+USING MODEL CONFIG: self._conf[model][d_time_emb_proj] = 10
+USING MODEL CONFIG: self._conf[model][freeze_track_motif] = False
+USING MODEL CONFIG: self._conf[model][use_motif_timestep] = True
+USING MODEL CONFIG: self._conf[diffuser][T] = 50
+USING MODEL CONFIG: self._conf[diffuser][b_0] = 0.01
+USING MODEL CONFIG: self._conf[diffuser][b_T] = 0.07
+USING MODEL CONFIG: self._conf[diffuser][schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][so3_type] = igso3
+USING MODEL CONFIG: self._conf[diffuser][crd_scale] = 0.25
+USING MODEL CONFIG: self._conf[diffuser][so3_schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][min_b] = 1.5
+USING MODEL CONFIG: self._conf[diffuser][max_b] = 2.5
+USING MODEL CONFIG: self._conf[diffuser][min_sigma] = 0.02
+USING MODEL CONFIG: self._conf[diffuser][max_sigma] = 1.5
+USING MODEL CONFIG: self._conf[preprocess][sidechain_input] = False
+USING MODEL CONFIG: self._conf[preprocess][motif_sidechain_input] = True
+USING MODEL CONFIG: self._conf[preprocess][d_t1d] = 22
+USING MODEL CONFIG: self._conf[preprocess][d_t2d] = 44
+USING MODEL CONFIG: self._conf[preprocess][prob_self_cond] = 0.5
+USING MODEL CONFIG: self._conf[preprocess][str_self_cond] = True
+USING MODEL CONFIG: self._conf[preprocess][predict_previous] = False
+WARNING: You are changing diffuser.T from the value this model was trained with. Are you sure you know what you are doing?
+[2025-05-15 10:33:13,918][inference.model_runners][INFO] - Loading checkpoint.
+[2025-05-15 10:33:14,286][diffusion][INFO] - Using cached IGSO3.
+Successful diffuser __init__
+[2025-05-15 10:33:14,301][__main__][INFO] - Making design outputs/test_0
+[2025-05-15 10:33:14,309][inference.model_runners][INFO] - Using contig: ['100-100']
+With this beta schedule (linear schedule, beta_0 = 0.04, beta_T = 0.28), alpha_bar_T = 0.00013696050154976547
+[2025-05-15 10:33:14,348][inference.model_runners][INFO] - Sequence init: ----------------------------------------------------------------------------------------------------
+Error executing job with overrides: ['inference.output_prefix=outputs/test', 'inference.num_designs=1', 'diffuser.T=50', 'contigmap.contigs=[100-100]', 'inference.dump_pdb=True', 'inference.dump_pdb_path=/dev/shm']
+Traceback (most recent call last):
+  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 86, in main
+    px0, x_t, seq_t, plddt = sampler.sample_step(
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 669, in sample_step
+    msa_prev, pair_prev, px0, state_prev, alpha, logits, plddt = self.model(msa_masked,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/RoseTTAFoldModel.py", line 115, in forward
+    msa, pair, R, T, alpha_s, state = self.simulator(seq, msa_latent, msa_full, pair, xyz[:,:,:3],
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 425, in forward
+    msa_full, pair, R_in, T_in, state, alpha = self.extra_block[i_m](msa_full,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 337, in forward
+    R, T, state, alpha = self.str2str(msa, pair, R_in, T_in, xyz, state, idx, motif_mask=motif_mask, top_k=0)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 16, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 271, in forward
+    shift = self.se3(G, node.reshape(B*L, -1, 1), l1_feats, edge_feats)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/SE3_network.py", line 83, in forward
+    return self.se3(G, node_features, edge_features)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 150, in forward
+    node_feats = self.graph_modules(node_feats, edge_feats, graph=graph, basis=basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 46, in forward
+    input = module(input, *args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/attention.py", line 157, in forward
+    fused_key_value = self.to_key_value(node_features, edge_features, graph, basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/convolution.py", line 281, in forward
+    src, dst = graph.edges()
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/view.py", line 179, in __call__
+    return self._graph.all_edges(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph.py", line 3591, in all_edges
+    src, dst, eid = self._graph.edges(self.get_etype_id(etype), order)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph_index.py", line 696, in edges
+    edge_array = _CAPI_DGLHeteroEdges(self, int(etype), order)
+  File "dgl/_ffi/_cython/./function.pxi", line 295, in dgl._ffi._cy3.core.FunctionBase.__call__
+  File "dgl/_ffi/_cython/./function.pxi", line 227, in dgl._ffi._cy3.core.FuncCall
+  File "dgl/_ffi/_cython/./function.pxi", line 217, in dgl._ffi._cy3.core.FuncCall3
+dgl._ffi.base.DGLError: [10:33:15] /opt/dgl/src/array/array.cc:42: Operator Range does not support cuda device.
+Stack trace:
+  [bt] (0) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x1228f1) [0x7922bc1228f1]
+  [bt] (1) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::aten::Range(long, long, unsigned char, DGLContext)+0x113) [0x7922bc123ad3]
+  [bt] (2) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::COO::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x91) [0x7922bc6fef21]
+  [bt] (3) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0xb0) [0x7922bc6f2a00]
+  [bt] (4) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::HeteroGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x2a) [0x7922bc615eca]
+  [bt] (5) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x621881) [0x7922bc621881]
+  [bt] (6) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(DGLFuncCall+0x4c) [0x7922bc5b9e2c]
+  [bt] (7) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1b986) [0x7922bb41b986]
+  [bt] (8) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1c14f) [0x7922bb41c14f]
+
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[2025-05-15 13:02:04,788][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+[2025-05-15 13:03:10,772][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+This is inf_conf.ckpt_path
+/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+Assembling -model, -diffuser and -preprocess configs from checkpoint
+USING MODEL CONFIG: self._conf[model][n_extra_block] = 4
+USING MODEL CONFIG: self._conf[model][n_main_block] = 32
+USING MODEL CONFIG: self._conf[model][n_ref_block] = 4
+USING MODEL CONFIG: self._conf[model][d_msa] = 256
+USING MODEL CONFIG: self._conf[model][d_msa_full] = 64
+USING MODEL CONFIG: self._conf[model][d_pair] = 128
+USING MODEL CONFIG: self._conf[model][d_templ] = 64
+USING MODEL CONFIG: self._conf[model][n_head_msa] = 8
+USING MODEL CONFIG: self._conf[model][n_head_pair] = 4
+USING MODEL CONFIG: self._conf[model][n_head_templ] = 4
+USING MODEL CONFIG: self._conf[model][d_hidden] = 32
+USING MODEL CONFIG: self._conf[model][d_hidden_templ] = 32
+USING MODEL CONFIG: self._conf[model][p_drop] = 0.15
+USING MODEL CONFIG: self._conf[model][SE3_param_full] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 8, 'l0_out_features': 8, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 32}
+USING MODEL CONFIG: self._conf[model][SE3_param_topk] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 64, 'l0_out_features': 64, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 64}
+USING MODEL CONFIG: self._conf[model][d_time_emb] = 0
+USING MODEL CONFIG: self._conf[model][d_time_emb_proj] = 10
+USING MODEL CONFIG: self._conf[model][freeze_track_motif] = False
+USING MODEL CONFIG: self._conf[model][use_motif_timestep] = True
+USING MODEL CONFIG: self._conf[diffuser][T] = 50
+USING MODEL CONFIG: self._conf[diffuser][b_0] = 0.01
+USING MODEL CONFIG: self._conf[diffuser][b_T] = 0.07
+USING MODEL CONFIG: self._conf[diffuser][schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][so3_type] = igso3
+USING MODEL CONFIG: self._conf[diffuser][crd_scale] = 0.25
+USING MODEL CONFIG: self._conf[diffuser][so3_schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][min_b] = 1.5
+USING MODEL CONFIG: self._conf[diffuser][max_b] = 2.5
+USING MODEL CONFIG: self._conf[diffuser][min_sigma] = 0.02
+USING MODEL CONFIG: self._conf[diffuser][max_sigma] = 1.5
+USING MODEL CONFIG: self._conf[preprocess][sidechain_input] = False
+USING MODEL CONFIG: self._conf[preprocess][motif_sidechain_input] = True
+USING MODEL CONFIG: self._conf[preprocess][d_t1d] = 22
+USING MODEL CONFIG: self._conf[preprocess][d_t2d] = 44
+USING MODEL CONFIG: self._conf[preprocess][prob_self_cond] = 0.5
+USING MODEL CONFIG: self._conf[preprocess][str_self_cond] = True
+USING MODEL CONFIG: self._conf[preprocess][predict_previous] = False
+WARNING: You are changing diffuser.T from the value this model was trained with. Are you sure you know what you are doing?
+[2025-05-15 13:03:15,817][inference.model_runners][INFO] - Loading checkpoint.
+[2025-05-15 13:03:16,096][diffusion][INFO] - Using cached IGSO3.
+Successful diffuser __init__
+[2025-05-15 13:03:16,124][__main__][INFO] - Making design outputs/test_0
+[2025-05-15 13:03:16,130][inference.model_runners][INFO] - Using contig: ['100-100']
+With this beta schedule (linear schedule, beta_0 = 0.04, beta_T = 0.28), alpha_bar_T = 0.00013696050154976547
+[2025-05-15 13:03:16,167][inference.model_runners][INFO] - Sequence init: ----------------------------------------------------------------------------------------------------
+Error executing job with overrides: ['inference.output_prefix=outputs/test', 'inference.num_designs=1', 'diffuser.T=50', 'contigmap.contigs=[100-100]', 'inference.dump_pdb=True', 'inference.dump_pdb_path=/dev/shm']
+Traceback (most recent call last):
+  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 86, in main
+    px0, x_t, seq_t, plddt = sampler.sample_step(
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 669, in sample_step
+    msa_prev, pair_prev, px0, state_prev, alpha, logits, plddt = self.model(msa_masked,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/RoseTTAFoldModel.py", line 115, in forward
+    msa, pair, R, T, alpha_s, state = self.simulator(seq, msa_latent, msa_full, pair, xyz[:,:,:3],
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 425, in forward
+    msa_full, pair, R_in, T_in, state, alpha = self.extra_block[i_m](msa_full,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 337, in forward
+    R, T, state, alpha = self.str2str(msa, pair, R_in, T_in, xyz, state, idx, motif_mask=motif_mask, top_k=0)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 16, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 271, in forward
+    shift = self.se3(G, node.reshape(B*L, -1, 1), l1_feats, edge_feats)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/SE3_network.py", line 83, in forward
+    return self.se3(G, node_features, edge_features)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 150, in forward
+    node_feats = self.graph_modules(node_feats, edge_feats, graph=graph, basis=basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 46, in forward
+    input = module(input, *args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/attention.py", line 157, in forward
+    fused_key_value = self.to_key_value(node_features, edge_features, graph, basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/convolution.py", line 281, in forward
+    src, dst = graph.edges()
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/view.py", line 179, in __call__
+    return self._graph.all_edges(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph.py", line 3591, in all_edges
+    src, dst, eid = self._graph.edges(self.get_etype_id(etype), order)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph_index.py", line 696, in edges
+    edge_array = _CAPI_DGLHeteroEdges(self, int(etype), order)
+  File "dgl/_ffi/_cython/./function.pxi", line 295, in dgl._ffi._cy3.core.FunctionBase.__call__
+  File "dgl/_ffi/_cython/./function.pxi", line 227, in dgl._ffi._cy3.core.FuncCall
+  File "dgl/_ffi/_cython/./function.pxi", line 217, in dgl._ffi._cy3.core.FuncCall3
+dgl._ffi.base.DGLError: [13:03:17] /opt/dgl/src/array/array.cc:42: Operator Range does not support cuda device.
+Stack trace:
+  [bt] (0) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x1228f1) [0x7b25273228f1]
+  [bt] (1) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::aten::Range(long, long, unsigned char, DGLContext)+0x113) [0x7b2527323ad3]
+  [bt] (2) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::COO::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x91) [0x7b25278fef21]
+  [bt] (3) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0xb0) [0x7b25278f2a00]
+  [bt] (4) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::HeteroGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x2a) [0x7b2527815eca]
+  [bt] (5) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x621881) [0x7b2527821881]
+  [bt] (6) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(DGLFuncCall+0x4c) [0x7b25277b9e2c]
+  [bt] (7) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1b986) [0x7b2526a1b986]
+  [bt] (8) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1c14f) [0x7b2526a1c14f]
+
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[2025-05-15 13:08:46,614][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+This is inf_conf.ckpt_path
+/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+Assembling -model, -diffuser and -preprocess configs from checkpoint
+USING MODEL CONFIG: self._conf[model][n_extra_block] = 4
+USING MODEL CONFIG: self._conf[model][n_main_block] = 32
+USING MODEL CONFIG: self._conf[model][n_ref_block] = 4
+USING MODEL CONFIG: self._conf[model][d_msa] = 256
+USING MODEL CONFIG: self._conf[model][d_msa_full] = 64
+USING MODEL CONFIG: self._conf[model][d_pair] = 128
+USING MODEL CONFIG: self._conf[model][d_templ] = 64
+USING MODEL CONFIG: self._conf[model][n_head_msa] = 8
+USING MODEL CONFIG: self._conf[model][n_head_pair] = 4
+USING MODEL CONFIG: self._conf[model][n_head_templ] = 4
+USING MODEL CONFIG: self._conf[model][d_hidden] = 32
+USING MODEL CONFIG: self._conf[model][d_hidden_templ] = 32
+USING MODEL CONFIG: self._conf[model][p_drop] = 0.15
+USING MODEL CONFIG: self._conf[model][SE3_param_full] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 8, 'l0_out_features': 8, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 32}
+USING MODEL CONFIG: self._conf[model][SE3_param_topk] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 64, 'l0_out_features': 64, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 64}
+USING MODEL CONFIG: self._conf[model][d_time_emb] = 0
+USING MODEL CONFIG: self._conf[model][d_time_emb_proj] = 10
+USING MODEL CONFIG: self._conf[model][freeze_track_motif] = False
+USING MODEL CONFIG: self._conf[model][use_motif_timestep] = True
+USING MODEL CONFIG: self._conf[diffuser][T] = 50
+USING MODEL CONFIG: self._conf[diffuser][b_0] = 0.01
+USING MODEL CONFIG: self._conf[diffuser][b_T] = 0.07
+USING MODEL CONFIG: self._conf[diffuser][schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][so3_type] = igso3
+USING MODEL CONFIG: self._conf[diffuser][crd_scale] = 0.25
+USING MODEL CONFIG: self._conf[diffuser][so3_schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][min_b] = 1.5
+USING MODEL CONFIG: self._conf[diffuser][max_b] = 2.5
+USING MODEL CONFIG: self._conf[diffuser][min_sigma] = 0.02
+USING MODEL CONFIG: self._conf[diffuser][max_sigma] = 1.5
+USING MODEL CONFIG: self._conf[preprocess][sidechain_input] = False
+USING MODEL CONFIG: self._conf[preprocess][motif_sidechain_input] = True
+USING MODEL CONFIG: self._conf[preprocess][d_t1d] = 22
+USING MODEL CONFIG: self._conf[preprocess][d_t2d] = 44
+USING MODEL CONFIG: self._conf[preprocess][prob_self_cond] = 0.5
+USING MODEL CONFIG: self._conf[preprocess][str_self_cond] = True
+USING MODEL CONFIG: self._conf[preprocess][predict_previous] = False
+WARNING: You are changing diffuser.T from the value this model was trained with. Are you sure you know what you are doing?
+[2025-05-15 13:08:51,796][inference.model_runners][INFO] - Loading checkpoint.
+[2025-05-15 13:08:52,086][diffusion][INFO] - Using cached IGSO3.
+Successful diffuser __init__
+[2025-05-15 13:08:52,097][__main__][INFO] - Making design outputs/test_0
+[2025-05-15 13:08:52,103][inference.model_runners][INFO] - Using contig: ['100-100']
+With this beta schedule (linear schedule, beta_0 = 0.04, beta_T = 0.28), alpha_bar_T = 0.00013696050154976547
+[2025-05-15 13:08:52,132][inference.model_runners][INFO] - Sequence init: ----------------------------------------------------------------------------------------------------
+Error executing job with overrides: ['inference.output_prefix=outputs/test', 'inference.num_designs=1', 'diffuser.T=50', 'contigmap.contigs=[100-100]', 'inference.dump_pdb=True', 'inference.dump_pdb_path=/dev/shm']
+Traceback (most recent call last):
+  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 86, in main
+    px0, x_t, seq_t, plddt = sampler.sample_step(
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 669, in sample_step
+    msa_prev, pair_prev, px0, state_prev, alpha, logits, plddt = self.model(msa_masked,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/RoseTTAFoldModel.py", line 115, in forward
+    msa, pair, R, T, alpha_s, state = self.simulator(seq, msa_latent, msa_full, pair, xyz[:,:,:3],
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 425, in forward
+    msa_full, pair, R_in, T_in, state, alpha = self.extra_block[i_m](msa_full,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 337, in forward
+    R, T, state, alpha = self.str2str(msa, pair, R_in, T_in, xyz, state, idx, motif_mask=motif_mask, top_k=0)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 16, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 271, in forward
+    shift = self.se3(G, node.reshape(B*L, -1, 1), l1_feats, edge_feats)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/SE3_network.py", line 83, in forward
+    return self.se3(G, node_features, edge_features)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 150, in forward
+    node_feats = self.graph_modules(node_feats, edge_feats, graph=graph, basis=basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 46, in forward
+    input = module(input, *args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/attention.py", line 157, in forward
+    fused_key_value = self.to_key_value(node_features, edge_features, graph, basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/convolution.py", line 281, in forward
+    src, dst = graph.edges()
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/view.py", line 179, in __call__
+    return self._graph.all_edges(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph.py", line 3591, in all_edges
+    src, dst, eid = self._graph.edges(self.get_etype_id(etype), order)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph_index.py", line 696, in edges
+    edge_array = _CAPI_DGLHeteroEdges(self, int(etype), order)
+  File "dgl/_ffi/_cython/./function.pxi", line 295, in dgl._ffi._cy3.core.FunctionBase.__call__
+  File "dgl/_ffi/_cython/./function.pxi", line 227, in dgl._ffi._cy3.core.FuncCall
+  File "dgl/_ffi/_cython/./function.pxi", line 217, in dgl._ffi._cy3.core.FuncCall3
+dgl._ffi.base.DGLError: [13:08:53] /opt/dgl/src/array/array.cc:42: Operator Range does not support cuda device.
+Stack trace:
+  [bt] (0) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x1228f1) [0x78c4ff1228f1]
+  [bt] (1) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::aten::Range(long, long, unsigned char, DGLContext)+0x113) [0x78c4ff123ad3]
+  [bt] (2) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::COO::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x91) [0x78c4ff6fef21]
+  [bt] (3) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0xb0) [0x78c4ff6f2a00]
+  [bt] (4) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::HeteroGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x2a) [0x78c4ff615eca]
+  [bt] (5) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x621881) [0x78c4ff621881]
+  [bt] (6) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(DGLFuncCall+0x4c) [0x78c4ff5b9e2c]
+  [bt] (7) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1b986) [0x78c4fe81b986]
+  [bt] (8) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1c14f) [0x78c4fe81c14f]
+
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[2025-05-15 13:19:34,938][inference.model_runners][INFO] - Reading checkpoint from /home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+This is inf_conf.ckpt_path
+/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/../models/Base_ckpt.pt
+Assembling -model, -diffuser and -preprocess configs from checkpoint
+USING MODEL CONFIG: self._conf[model][n_extra_block] = 4
+USING MODEL CONFIG: self._conf[model][n_main_block] = 32
+USING MODEL CONFIG: self._conf[model][n_ref_block] = 4
+USING MODEL CONFIG: self._conf[model][d_msa] = 256
+USING MODEL CONFIG: self._conf[model][d_msa_full] = 64
+USING MODEL CONFIG: self._conf[model][d_pair] = 128
+USING MODEL CONFIG: self._conf[model][d_templ] = 64
+USING MODEL CONFIG: self._conf[model][n_head_msa] = 8
+USING MODEL CONFIG: self._conf[model][n_head_pair] = 4
+USING MODEL CONFIG: self._conf[model][n_head_templ] = 4
+USING MODEL CONFIG: self._conf[model][d_hidden] = 32
+USING MODEL CONFIG: self._conf[model][d_hidden_templ] = 32
+USING MODEL CONFIG: self._conf[model][p_drop] = 0.15
+USING MODEL CONFIG: self._conf[model][SE3_param_full] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 8, 'l0_out_features': 8, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 32}
+USING MODEL CONFIG: self._conf[model][SE3_param_topk] = {'num_layers': 1, 'num_channels': 32, 'num_degrees': 2, 'n_heads': 4, 'div': 4, 'l0_in_features': 64, 'l0_out_features': 64, 'l1_in_features': 3, 'l1_out_features': 2, 'num_edge_features': 64}
+USING MODEL CONFIG: self._conf[model][d_time_emb] = 0
+USING MODEL CONFIG: self._conf[model][d_time_emb_proj] = 10
+USING MODEL CONFIG: self._conf[model][freeze_track_motif] = False
+USING MODEL CONFIG: self._conf[model][use_motif_timestep] = True
+USING MODEL CONFIG: self._conf[diffuser][T] = 50
+USING MODEL CONFIG: self._conf[diffuser][b_0] = 0.01
+USING MODEL CONFIG: self._conf[diffuser][b_T] = 0.07
+USING MODEL CONFIG: self._conf[diffuser][schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][so3_type] = igso3
+USING MODEL CONFIG: self._conf[diffuser][crd_scale] = 0.25
+USING MODEL CONFIG: self._conf[diffuser][so3_schedule_type] = linear
+USING MODEL CONFIG: self._conf[diffuser][min_b] = 1.5
+USING MODEL CONFIG: self._conf[diffuser][max_b] = 2.5
+USING MODEL CONFIG: self._conf[diffuser][min_sigma] = 0.02
+USING MODEL CONFIG: self._conf[diffuser][max_sigma] = 1.5
+USING MODEL CONFIG: self._conf[preprocess][sidechain_input] = False
+USING MODEL CONFIG: self._conf[preprocess][motif_sidechain_input] = True
+USING MODEL CONFIG: self._conf[preprocess][d_t1d] = 22
+USING MODEL CONFIG: self._conf[preprocess][d_t2d] = 44
+USING MODEL CONFIG: self._conf[preprocess][prob_self_cond] = 0.5
+USING MODEL CONFIG: self._conf[preprocess][str_self_cond] = True
+USING MODEL CONFIG: self._conf[preprocess][predict_previous] = False
+WARNING: You are changing diffuser.T from the value this model was trained with. Are you sure you know what you are doing?
+[2025-05-15 13:19:39,804][inference.model_runners][INFO] - Loading checkpoint.
+[2025-05-15 13:19:40,068][diffusion][INFO] - Using cached IGSO3.
+Successful diffuser __init__
+[2025-05-15 13:19:40,079][__main__][INFO] - Making design outputs/test_0
+[2025-05-15 13:19:40,085][inference.model_runners][INFO] - Using contig: ['100-100']
+With this beta schedule (linear schedule, beta_0 = 0.04, beta_T = 0.28), alpha_bar_T = 0.00013696050154976547
+[2025-05-15 13:19:40,115][inference.model_runners][INFO] - Sequence init: ----------------------------------------------------------------------------------------------------
+Error executing job with overrides: ['inference.output_prefix=outputs/test', 'inference.num_designs=1', 'diffuser.T=50', 'contigmap.contigs=[100-100]', 'inference.dump_pdb=True', 'inference.dump_pdb_path=/dev/shm']
+Traceback (most recent call last):
+  File "/home/user/ProteinBinder/code/diffusion/./RFdiffusion/run_inference.py", line 86, in main
+    px0, x_t, seq_t, plddt = sampler.sample_step(
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/inference/model_runners.py", line 669, in sample_step
+    msa_prev, pair_prev, px0, state_prev, alpha, logits, plddt = self.model(msa_masked,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/RoseTTAFoldModel.py", line 115, in forward
+    msa, pair, R, T, alpha_s, state = self.simulator(seq, msa_latent, msa_full, pair, xyz[:,:,:3],
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 425, in forward
+    msa_full, pair, R_in, T_in, state, alpha = self.extra_block[i_m](msa_full,
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 337, in forward
+    R, T, state, alpha = self.str2str(msa, pair, R_in, T_in, xyz, state, idx, motif_mask=motif_mask, top_k=0)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 16, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/Track_module.py", line 271, in forward
+    shift = self.se3(G, node.reshape(B*L, -1, 1), l1_feats, edge_feats)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/ProteinBinder/code/diffusion/RFdiffusion/SE3_network.py", line 83, in forward
+    return self.se3(G, node_features, edge_features)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 150, in forward
+    node_feats = self.graph_modules(node_feats, edge_feats, graph=graph, basis=basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/transformer.py", line 46, in forward
+    input = module(input, *args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/attention.py", line 157, in forward
+    fused_key_value = self.to_key_value(node_features, edge_features, graph, basis)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/se3_transformer/model/layers/convolution.py", line 281, in forward
+    src, dst = graph.edges()
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/view.py", line 179, in __call__
+    return self._graph.all_edges(*args, **kwargs)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph.py", line 3591, in all_edges
+    src, dst, eid = self._graph.edges(self.get_etype_id(etype), order)
+  File "/home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/heterograph_index.py", line 696, in edges
+    edge_array = _CAPI_DGLHeteroEdges(self, int(etype), order)
+  File "dgl/_ffi/_cython/./function.pxi", line 295, in dgl._ffi._cy3.core.FunctionBase.__call__
+  File "dgl/_ffi/_cython/./function.pxi", line 227, in dgl._ffi._cy3.core.FuncCall
+  File "dgl/_ffi/_cython/./function.pxi", line 217, in dgl._ffi._cy3.core.FuncCall3
+dgl._ffi.base.DGLError: [13:19:41] /opt/dgl/src/array/array.cc:42: Operator Range does not support cuda device.
+Stack trace:
+  [bt] (0) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x1228f1) [0x70ef3f5228f1]
+  [bt] (1) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::aten::Range(long, long, unsigned char, DGLContext)+0x113) [0x70ef3f523ad3]
+  [bt] (2) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::COO::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x91) [0x70ef3fafef21]
+  [bt] (3) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::UnitGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0xb0) [0x70ef3faf2a00]
+  [bt] (4) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(dgl::HeteroGraph::Edges(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x2a) [0x70ef3fa15eca]
+  [bt] (5) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(+0x621881) [0x70ef3fa21881]
+  [bt] (6) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/libdgl.so(DGLFuncCall+0x4c) [0x70ef3f9b9e2c]
+  [bt] (7) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1b986) [0x70ef3ec1b986]
+  [bt] (8) /home/user/miniconda3/envs/proto/lib/python3.10/site-packages/dgl/_ffi/_cy3/core.cpython-310-x86_64-linux-gnu.so(+0x1c14f) [0x70ef3ec1c14f]
+
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

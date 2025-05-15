@@ -1,0 +1,9 @@
+code/bindcraft/__pycache__/
+code/bindcraft/*.pyc
+code/bindcraft/wandb/
+code/bindcraft/BindCraft/
+code/bindcraft/content/
+code/diffusion/outputs/
+code/diffusion/params/
+code/diffusion/__pycache__/
+code/diffusion/*.pyc
