@@ -5,6 +5,7 @@ icecream
 pyrsistent
 pynvml
 decorator
+pysmartdl
 git+https://github.com/NVIDIA/dllogger#egg=dllogger
 dgl==2.1.0 -f https://data.dgl.ai/wheels/cu121/repo.html
 e3nn==0.5.5
@@ -22,4 +23,4 @@ torchdata==0.7.0
 dgl -f https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
 pydantic
 torch==2.1.0
-./RFDiffusion/env/SE3Transformer
+./RFdiffusion/env/SE3Transformer
