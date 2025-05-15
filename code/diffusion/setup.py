@@ -1,8 +1,7 @@
 #@title setup **RFdiffusion** (~3min)
 import os, time, signal
 import sys, random, string, re
-from PysmartDL import *
-from PysmartDL import SmartDL
+from pySmartDL import SmartDL
 import tarfile
 import zipfile
 
