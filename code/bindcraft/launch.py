@@ -1,16 +1,19 @@
 from argparser import getArgs
 from utils import *
 from bindcraft.functions import *
-import datetime
+from datetime import datetime
 import wandb
 from setup import *
+import subprocess
+import sys
 
 #@title Consolidate & Rank Designs
 #@markdown ---
 install_bindcraft_components()
 
 args = getArgs()
-
+print("args")
+print(args)
 # args = {"settings":target_settings_path,
 #         "filters":filter_settings_path,
 #         "advanced":advanced_settings_path}
@@ -29,8 +32,11 @@ advanced_file = os.path.basename(advanced_path).split('.')[0]
 design_models, prediction_models, multimer_validation = load_af2_models(advanced_settings["use_multimer_design"])
 
 ### perform checks on advanced_settings
-bindcraft_folder = "colab"
+bindcraft_folder = "./bindcraft"
 advanced_settings = perform_advanced_settings_check(advanced_settings, bindcraft_folder)
+
+### disable animations if not using Colab
+advanced_settings["save_design_animations"]=False
 
 ### generate directories, design path names can be found within the function
 design_paths = generate_directories(target_settings["design_path"])
@@ -82,13 +88,11 @@ trajectory_dirs = ["Trajectory", "Trajectory/Relaxed", "Trajectory/LowConfidence
 
 
 # Check if JAX-capable GPU is available, otherwise exit
-check_jax_gpu()
-
 
 
 # Initialize wandb logger
 wandb.init(
-    entity="your_wandb_entity",  # Replace with your WandB entity
+    entity="st7ma784",  # Replace with your WandB entity
     project="bindcraft",  # Replace with your project name
     name=f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}",  # Unique run name
     config={

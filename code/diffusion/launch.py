@@ -1,16 +1,20 @@
-from argparser import *
 import os
+
+import sys
+sys.path.append("RFdiffusion")
+from RFdiffusion import *
+
 from utils import *
 
 import time
 import random
 import string
 import sys
-
 from colabdesign.mpnn import mk_mpnn_model
 from colabdesign.af import mk_af_model
 from colabdesign.shared.protein import pdb_to_string
 from colabdesign.shared.parse_args import parse_args
+from argparser import *
 
 import pandas as pd
 import numpy as np
@@ -18,30 +22,32 @@ from string import ascii_uppercase, ascii_lowercase
 alphabet_list = list(ascii_uppercase+ascii_lowercase)
 
 args=parse_args()
-
-
+#convert namespace to dict
+args = vars(args)
+print("args")
+print(args)
 
 if not os.path.isdir("outputs"):
   os.makedirs("outputs")
 
 
-path = args.name
+path = args["name"]
 while os.path.exists(f"outputs/{path}_0.pdb"):
-  path = args.name + "_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+  path = args["name"] + "_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
-flags = {"contigs":args.contigs,
-         "pdb":args.pdb,
-         "order":args.order,
-         "iterations":int(args.iterations),
-         "symmetry":args.symmetry,
-         "hotspot":args.hotspot,
-         "path":args.path,
-         "chains":args.chains,
-         "add_potential":args.add_potential,
-         "num_designs":args.num_designs,
-         "use_beta_model":args.use_beta_model,
-         "visual":args.visual,
-         "partial_T":args.partial_T}
+flags = {"contigs":args["contigs"],
+         "pdb":args["pdb"],
+         "order":args["order"],
+         "iterations":int(args["iterations"]),
+         "symmetry":args["symmetry"],
+         "hotspot":args["hotspot"],
+         "path":path,
+         "chains":args["chains"],
+         "add_potential":args["add_potential"],
+         "num_designs":args["num_designs"],
+         "use_beta_model":args["use_beta_model"],
+         "visual":args["visual"],
+         "partial_T":args["partial_T"]}
 
 for k,v in flags.items():
   if isinstance(v,str):
@@ -54,22 +60,20 @@ if not os.path.isfile("params/done.txt"):
   print("downloading AlphaFold params...")
   while not os.path.isfile("params/done.txt"):
     time.sleep(5)
-
- 
-  plot_pdb()
+  plot_pdb(path, num=0, denoise=True, animate=False)
 
 
 # !python colabdesign/rf/designability_test.py {opts}
 #####################################################################
 
 
-num_seqs = args.num_seqs
+num_seqs = args["num_seqs"]
 loc="outputs/{path}"
 pdb="outputs/{path}_0.pdb"
 
 contigs_str = ":".join(contigs)
 
-rm_aa = args.rm_aa
+rm_aa = args["rm_aa"]
 
 if rm_aa == "":
     rm_aa = None
@@ -96,10 +100,10 @@ for pos,(fixed_chain,free_chain) in info:
     free_chains += [free_chain and not fixed_chain]
     both_chains += [fixed_chain and free_chain]
 
-flags = {"initial_guess":args.initial_guess,
+flags = {"initial_guess":args["initial_guess"],
         "best_metric":"rmsd",
-        "use_multimer":args.use_multimer,
-        "model_names":["model_1_multimer_v3" if args.use_multimer else "model_1_ptm"]}
+        "use_multimer":args["use_multimer"],
+        "model_names":["model_1_multimer_v3" if args["use_multimer"] else "model_1_ptm"]}
 
 if sum(both_chains) == 0 and sum(fixed_chains) > 0 and sum(free_chains) > 0:
     protocol = "binder"
@@ -133,21 +137,21 @@ else:
     print("protocol=fixbb")
     af_model = mk_af_model(protocol="fixbb",**flags)
     prep_flags = {"chain":",".join(chains),
-                    "copies":copies,
-                    "homooligomer":copies>1,
-                    "rm_aa":rm_aa}
+                "copies":copies,
+                "homooligomer":copies>1,
+                "rm_aa":rm_aa}
 
 batch_size = 8
 if num_seqs < batch_size:
     batch_size = num_seqs
 
 print("running proteinMPNN...")
-sampling_temp = args.mpnn_sampling_temp
-mpnn_model = mk_mpnn_model(weights="soluble" if args.use_solubleMPNN else "original")
+sampling_temp = args["mpnn_sampling_temp"]
+mpnn_model = mk_mpnn_model(weights="soluble" if args["use_solubleMPNN"] else "original")
 outs = []
 pdbs = []
-for m in range(args.num_designs):
-    if args.num_designs == 0:
+for m in range(args["num_designs"]):
+    if args["num_designs"] == 0:
         pdb_filename = pdb
     else:
         pdb_filename = pdb.replace("_0.pdb",f"_{m}.pdb")
@@ -182,7 +186,7 @@ with open(f"{loc}/design.fasta","w") as fasta:
             out["design"].append(m)
             out["n"].append(n)
             sub_seq = out["seq"][n].replace("/","")[-af_model._len:]
-            af_model.predict(seq=sub_seq, num_recycles=args.num_recycles, verbose=False)
+            af_model.predict(seq=sub_seq, num_recycles=args["num_recycles"], verbose=False)
             for t in af_terms: out[t].append(af_model.aux["log"][t])
             if "i_pae" in out:
                 out["i_pae"][-1] = out["i_pae"][-1] * 31

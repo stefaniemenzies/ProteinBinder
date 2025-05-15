@@ -5,13 +5,12 @@ from datetime import datetime
 
 def getArgs():
     parser = argparse.ArgumentParser(description="Binder design settings for BindCraft")
-
     # Binder design settings
-    parser.add_argument("--design_path", type=str, default="./content/drive/MyDrive/BindCraft/PDL1/",
+    parser.add_argument("--design_path", type=str, default="./BindCraft/PDL1/",
                         help="Path where to save your designs.")
     parser.add_argument("--binder_name", type=str, default="PDL1",
                         help="Name to prefix to your binders (generally target name).")
-    parser.add_argument("--starting_pdb", type=str, default="./content/bindcraft/example/PDL1.pdb",
+    parser.add_argument("--starting_pdb", type=str, default="./bindcraft/example/PDL1.pdb",
                         help="Path to the .pdb structure of your target.")
     parser.add_argument("--chains", type=str, default="A",
                         help="Chains of your PDB to target (comma-separated).")
@@ -104,29 +103,29 @@ def getArgs():
         else:
             raise ValueError(f"Unsupported prediction protocol")
 
-    advanced_settings_path = "./content/bindcraft/settings_advanced/" + design_protocol_tag + interface_protocol_tag + template_protocol_tag + ".json"
+    advanced_settings_path = "./bindcraft/settings_advanced/" + design_protocol_tag + interface_protocol_tag + template_protocol_tag + ".json"
 
     currenttime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Advanced design settings updated at: {currenttime}")
 
     # Filters processing
     if args.filter_option == "Default":
-        filter_settings_path = "./content/bindcraft/settings_filters/default_filters.json"
+        filter_settings_path = "./bindcraft/settings_filters/default_filters.json"
     elif args.filter_option == "Peptide":
-        filter_settings_path = "./content/bindcraft/settings_filters/peptide_filters.json"
+        filter_settings_path = "./bindcraft/settings_filters/peptide_filters.json"
     elif args.filter_option == "Relaxed":
-        filter_settings_path = "./content/bindcraft/settings_filters/relaxed_filters.json"
+        filter_settings_path = "./bindcraft/settings_filters/relaxed_filters.json"
     elif args.filter_option == "Peptide_Relaxed":
-        filter_settings_path = "./content/bindcraft/settings_filters/peptide_relaxed_filters.json"
+        filter_settings_path = "./bindcraft/settings_filters/peptide_relaxed_filters.json"
     elif args.filter_option == "None":
-        filter_settings_path = "./content/bindcraft/settings_filters/no_filters.json"
+        filter_settings_path = "./bindcraft/settings_filters/no_filters.json"
     else:
         raise ValueError(f"Unsupported filter type")
 
     currenttime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Filter settings updated at: {currenttime}")
-
-    # Save the advanced settings to a JSON file
+    #load advanced settings from JSON file
+    
     advanced_settings = {
         "design_protocol": design_protocol_tag,
         "interface_protocol": interface_protocol_tag,
@@ -135,7 +134,7 @@ def getArgs():
         "filters": filter_settings_path,
         "settings": target_settings_path,
         "advanced": advanced_settings_path,
-
+        "af_params_dir": "./bindcraft/params/",
     }
     return advanced_settings
 

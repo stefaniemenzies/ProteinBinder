@@ -10,7 +10,7 @@ def parse_args():
     parser.add_argument("--iterations", type=int, choices=[25, 50, 100, 150, 200], default=50, help="Number of iterations.")
     parser.add_argument("--hotspot", type=str, default="", help="Hotspot residues.")
     parser.add_argument("--num_designs", type=int, choices=[1, 2, 4, 8, 16, 32], default=1, help="Number of designs to generate.")
-    parser.add_argument("--visual", type=str, choices=["none", "image", "interactive"], default="image", help="Visualization mode.")
+    parser.add_argument("--visual", type=str, choices=["none", "image"], default="image", help="Visualization mode.")
 
     # Symmetry settings
     parser.add_argument("--symmetry", type=str, choices=["none", "auto", "cyclic", "dihedral"], default="none", help="Symmetry mode.")

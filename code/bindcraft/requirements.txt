@@ -1,10 +1,11 @@
 git+https://github.com/sokrypton/ColabDesign.git
 pyrosetta-installer 
 py3Dmol
-IPython
-numpy==1.25.0
-jax==0.5.3
+# IPython
+numpy<2.0.0
+jax[cuda]==0.5.3
 jaxlib==0.5.3
 diffusers 
 protobuf==3.20.0
 pysmartdl
+pandas

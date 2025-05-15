@@ -131,13 +131,15 @@ def run(command, steps, num_designs=1, visual="none"):
                 fig.set_dpi(100);fig.set_figwidth(6);fig.set_figheight(6)
                 ax1 = fig.add_subplot(111);ax1.set_xticks([]);ax1.set_yticks([])
                 plot_pseudo_3D(xyz, c=bfact, cmin=0.5, cmax=0.9, ax=ax1)
-                plt.show()
+                plt.savefig(f"outputs/{path}_{n}.png", dpi=100, bbox_inches='tight')
+                plt.close(fig)
               if visual == "interactive":
                 view = py3Dmol.view(js='https://3dmol.org/build/3Dmol.js')
                 view.addModel(pdb_str,'pdb')
                 view.setStyle({'cartoon': {'colorscheme': {'prop':'b','gradient': 'roygb','min':0.5,'max':0.9}}})
                 view.zoomTo()
                 view.show()
+              
         if os.path.exists(f"/dev/shm/{n}.pdb"):
           os.remove(f"/dev/shm/{n}.pdb")
       if fail:
@@ -297,19 +299,27 @@ def run_diffusion(contigs, path, pdb=None, iterations=50,
             f"outputs/traj/{path}_{n}_Xt-1_traj.pdb",
             f"{full_path}_{n}.pdb"]
     for pdb in pdbs:
-      with open(pdb,"r") as handle: pdb_str = handle.read()
-      with open(pdb,"w") as handle: handle.write(fix_pdb(pdb_str, contigs))
+      if os.path.isfile(pdb):
+        if os.path.getsize(pdb) > 0:
+          with open(pdb,"r") as handle: pdb_str = handle.read()
+          with open(pdb,"w") as handle: handle.write(fix_pdb(pdb_str, contigs))
+        else:
+          print(f"ERROR: {pdb} is empty")
+      else:
+        print(f"ERROR: {pdb} not found")
 
   return contigs, copies
 
 
 
-def plot_pdb(num=0):
+def plot_pdb(path, num=0, denoise=True, animate=False,color="plddt", dpi=100):
   if denoise:
     pdb_traj = f"outputs/traj/{path}_{num}_pX0_traj.pdb"
   else:
     pdb_traj = f"outputs/traj/{path}_{num}_Xt-1_traj.pdb"
-  if animate in ["none","interactive"]:
+  if animate==False:
+    pass
+  elif animate in ["none","interactive"]:
     hbondCutoff = 4.0
     view = py3Dmol.view(js='https://3dmol.org/build/3Dmol.js')
     if animate == "interactive":

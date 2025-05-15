@@ -47,8 +47,7 @@ with zipfile.ZipFile("schedules.zip", 'r') as zip_ref:
   zip_ref.extractall()
 os.remove("schedules.zip")
 
-
-
 if 'RFdiffusion' not in sys.path:
   os.environ["DGLBACKEND"] = "pytorch"
   sys.path.append('RFdiffusion')
+
