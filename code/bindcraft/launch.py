@@ -494,3 +494,11 @@ while continue_designing:
 elapsed_time = time.time() - script_start_time
 elapsed_text = f"{'%d hours, %d minutes, %d seconds' % (int(elapsed_time // 3600), int((elapsed_time % 3600) // 60), int(elapsed_time % 60))}"
 print("Finished all designs. Script execution for "+str(trajectory_n)+" trajectories took: "+elapsed_text)
+
+#log final statistics to wandb and files
+wandb.log({
+    "Total Trajectories": trajectory_n,
+    "Total Accepted Designs": accepted_designs,
+    # "Total MPNN Designs": accepted_mpnn
+})
+wandb.finish()

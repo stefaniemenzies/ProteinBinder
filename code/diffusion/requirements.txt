@@ -24,4 +24,6 @@ dgl -f https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
 pydantic
 numpy<2.0.0
 torch==2.1.0
+jax[cuda]==0.4.4
+jaxlib==0.4.4
 ./RFdiffusion/env/SE3Transformer

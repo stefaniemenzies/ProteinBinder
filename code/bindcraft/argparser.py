@@ -8,17 +8,17 @@ def getArgs():
     # Binder design settings
     parser.add_argument("--design_path", type=str, default="./BindCraft/PDL1/",
                         help="Path where to save your designs.")
-    parser.add_argument("--binder_name", type=str, default="PDL1",
+    parser.add_argument("--binder_name", type=str, default="acbtx",
                         help="Name to prefix to your binders (generally target name).")
-    parser.add_argument("--starting_pdb", type=str, default="./bindcraft/example/PDL1.pdb",
+    parser.add_argument("--starting_pdb", type=str, default="./bindcraft/example/7ulg.pdb",
                         help="Path to the .pdb structure of your target.")
     parser.add_argument("--chains", type=str, default="A",
                         help="Chains of your PDB to target (comma-separated).")
-    parser.add_argument("--target_hotspot_residues", type=str, default="",
+    parser.add_argument("--target_hotspot_residues", type=str, default="A46-49",
                         help="Positions to target in your protein of interest.")
-    parser.add_argument("--lengths", type=str, default="70,150",
+    parser.add_argument("--lengths", type=str, default="60,100",
                         help="Minimum and maximum size of binders to design (comma-separated).")
-    parser.add_argument("--number_of_final_designs", type=int, default=100,
+    parser.add_argument("--number_of_final_designs", type=int, default=12,
                         help="Number of binder designs passing filters required.")
     parser.add_argument("--load_previous_target_settings", type=str, default="",
                         help="Path to previous target settings to continue design campaign.")
