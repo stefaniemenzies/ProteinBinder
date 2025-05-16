@@ -264,6 +264,8 @@ while continue_designing:
                         if not pass_af2_filters:
                             print(f"Base AF2 filters not passed for {mpnn_design_name}, skipping interface scoring")
                             mpnn_n += 1
+                            wandb.log({"mpnn_design_name": mpnn_design_name, "status": "skipped"})
+                            wandb.log({"mpnn_n": mpnn_n, "mpnn_score": mpnn_score, "mpnn_seqid": mpnn_seqid})
                             continue
 
                         # calculate statistics for each model individually
@@ -499,6 +501,9 @@ print("Finished all designs. Script execution for "+str(trajectory_n)+" trajecto
 wandb.log({
     "Total Trajectories": trajectory_n,
     "Total Accepted Designs": accepted_designs,
-    # "Total MPNN Designs": accepted_mpnn
 })
+
+#log the artifacts in the results folder
+artifacts = wandb.Artifact('bindcraft_results', type='results')
+artifacts.add_dir(target_settings["design_path"])
 wandb.finish()
