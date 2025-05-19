@@ -18,7 +18,7 @@ def getArgs():
                         help="Positions to target in your protein of interest.")
     parser.add_argument("--lengths", type=str, default="60,100",
                         help="Minimum and maximum size of binders to design (comma-separated).")
-    parser.add_argument("--number_of_final_designs", type=int, default=12,
+    parser.add_argument("--number_of_final_designs", type=int, default=48,
                         help="Number of binder designs passing filters required.")
     parser.add_argument("--load_previous_target_settings", type=str, default="",
                         help="Path to previous target settings to continue design campaign.")

@@ -506,4 +506,6 @@ wandb.log({
 #log the artifacts in the results folder
 artifacts = wandb.Artifact('bindcraft_results', type='results')
 artifacts.add_dir(target_settings["design_path"])
+wandb.log_artifact(artifacts)
+# Close wandb run
 wandb.finish()
