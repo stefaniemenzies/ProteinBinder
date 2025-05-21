@@ -190,6 +190,9 @@ while continue_designing:
                                 trajectory_alpha_interface, trajectory_beta_interface, trajectory_loops_interface, trajectory_alpha, trajectory_beta, trajectory_loops, trajectory_interface_AA, trajectory_target_rmsd,
                                 trajectory_time_text, traj_seq_notes, settings_file, filters_file, advanced_file]
             insert_data(trajectory_csv, trajectory_data)
+            #Could equally be a log with wandb using the table headers of the dataframe
+            # headers = trajectory_labels[1:]  # Exclude the first column (design_name)
+            # wandb.log({header: value for header, value in zip(headers, trajectory_data[1:])})
 
             if advanced_settings["enable_mpnn"]:
                 # initialise MPNN counters
@@ -386,7 +389,9 @@ while continue_designing:
 
                         # insert data into csv
                         insert_data(mpnn_csv, mpnn_data)
-
+                        # log the mpnn data to wandb
+                        headers = design_labels[1:]  # Exclude the first column (design_name)
+                        wandb.log({header: value for header, value in zip(headers, mpnn_data[1:])})
                         # find best model number by pLDDT
                         plddt_values = {i: mpnn_data[i] for i in range(11, 15) if mpnn_data[i] is not None}
 
@@ -414,6 +419,9 @@ while continue_designing:
                             # insert data into final csv
                             final_data = [''] + mpnn_data
                             insert_data(final_csv, final_data)
+                            #log the final data to wandb
+                            headers = final_labels[1:]  # Exclude the first column (design_name)
+                            wandb.log({header: value for header, value in zip(headers, final_data[1:])})
 
                             # copy animation from accepted trajectory
                             if advanced_settings["save_design_animations"]:

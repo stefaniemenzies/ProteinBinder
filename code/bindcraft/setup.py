@@ -1,6 +1,7 @@
 #@title Installation
 import os
 import tarfile
+from pySmartDL import SmartDL
 def install_bindcraft_components():
     """
     Install BindCraft components and download AlphaFold parameters if not already installed.
@@ -27,7 +28,9 @@ def install_bindcraft_components():
             url = "https://storage.googleapis.com/alphafold/alphafold_params_2022-12-06.tar"
             tar_path = "alphafold_params_2022-12-06.tar"
             print("Downloading AlphaFold params...")
-            urllib.request.urlretrieve(url, tar_path)
+            downloader = SmartDL(url, tar_path)
+            downloader.start(block=True)
+            print("Download complete.")
 
             # Extract the tar file
             print("Extracting AlphaFold params...")
