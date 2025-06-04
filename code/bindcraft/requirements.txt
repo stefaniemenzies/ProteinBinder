@@ -3,9 +3,9 @@ pyrosetta-installer
 py3Dmol
 # IPython
 numpy
-jax[cuda]==0.5.3
-jaxlib==0.5.3
 diffusers 
 protobuf==3.20.0
 pysmartdl
 pandas
+jax[cuda]
+jaxlib

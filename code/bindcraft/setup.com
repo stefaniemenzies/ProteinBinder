@@ -11,7 +11,7 @@
 # Load necessary modules (if required)
 module load miniconda
 
-# Create a new conda environment if not already created
+# Create a new conda environment if not already created in global_Storage path
 conda create -y -n bindcraft_env python=3.11 
 
 
