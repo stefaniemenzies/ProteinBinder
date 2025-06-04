@@ -15,7 +15,7 @@ cd $global_storage/ProteinBinder/code/bindcraft
 # Create a new conda environment if not already created in global_Storage path
 conda create -y --prefix $global_storage/bindcraft_env python=3.13
 
-ENV TMPDIR=$global_storage/bindcraft_env/tmp
+ENV TMPDIR=$global_storage/bindcraft_env/tmp #needed for pyrosetta! 
 # Activate the environment
 conda activate $global_storage/bindcraft_env
 
