@@ -26,17 +26,19 @@ def install_bindcraft_components():
             os.makedirs("bindcraft/params", exist_ok=True)
             # Download AlphaFold params using urllib
             url = "https://storage.googleapis.com/alphafold/alphafold_params_2022-12-06.tar"
-            tar_path = "alphafold_params_2022-12-06.tar"
+            tar_path = "alphafold_params.tar"
             print("Downloading AlphaFold params...")
-            downloader = SmartDL(url)
+            downloader = SmartDL(url, tar_path, progress_bar=True)
             downloader.start()
             downloader.wait()
+            destination = downloader.get_dest()
+            print(f"Downloaded AlphaFold params to {destination}")
             print("Download complete.")
 
             # Extract the tar file
             print("Extracting AlphaFold params...")
-            with tarfile.open(tar_path, "r") as tar:
-                tar.extractall(path="bindcraft/params")
+            with tarfile.open(destination, "r") as tar:
+                tar.extractall(path="./bindcraft/params")
 
             # Create the done.txt file
             with open("bindcraft/params/done.txt", "w") as f:
