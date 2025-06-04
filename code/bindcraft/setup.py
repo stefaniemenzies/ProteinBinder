@@ -52,7 +52,7 @@ def install_bindcraft_components():
         print("BindCraft components already installed, ready to run!")
 
     import pyrosetta_installer
-    pyrosetta_installer.install_pyrosetta(serialization=False,use_setup_py_package=True)
+    pyrosetta_installer.install_pyrosetta(serialization=False,use_setup_py_package=False)
 
 if __name__ == "__main__":
     install_bindcraft_components()
