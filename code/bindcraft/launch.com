@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=setup_env
-#SBATCH --output=setup_env.log
-#SBATCH --error=setup_env.err
+#SBATCH --job-name=launch_bindcraft
+#SBATCH --output=launch_bindcraft.log
+#SBATCH --error=launch_bindcraft.err
 #SBATCH --time=12:00:00
 #SBATCH --partition=gpu-medium
 #SBATCH --gres=gpu:1
