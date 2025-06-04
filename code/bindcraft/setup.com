@@ -13,11 +13,11 @@ module load miniconda
 
 
 # Create a new conda environment if not already created in global_Storage path
-conda create -y --prefix $global_Storage -n bindcraft_env python=3.11 
+conda create -y --prefix $global_storage/bindcraft_env python=3.11 
 
 
 # Activate the environment
-source activate bindcraft_env
+conda activate $global_storage/bindcraft_env
 
 # Install pip requirements
 python -m pip install -r requirements.txt
