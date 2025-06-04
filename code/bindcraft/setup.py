@@ -29,7 +29,8 @@ def install_bindcraft_components():
             tar_path = "alphafold_params_2022-12-06.tar"
             print("Downloading AlphaFold params...")
             downloader = SmartDL(url)
-            downloader.start(block=True)
+            downloader.start()
+            downloader.wait()
             print("Download complete.")
 
             # Extract the tar file
