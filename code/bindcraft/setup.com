@@ -11,16 +11,16 @@
 # Load necessary modules (if required)
 module load miniconda
 
-
+cd $global_storage/ProteinBinder/code/bindcraft
 # Create a new conda environment if not already created in global_Storage path
-conda create -y --prefix $global_storage/bindcraft_env python=3.11 
+conda create -y --prefix $global_storage/bindcraft_env python=3.13
 
 
 # Activate the environment
 conda activate $global_storage/bindcraft_env
 
 # Install pip requirements
-python -m pip install -r requirements.txt
+python -m pip install -r requirements.txt --no-cache-dir
 
 # Run setup.py
 python setup.py
