@@ -12,9 +12,9 @@
 # Load necessary modules (if required)
 module load miniconda
 
-export WANDB_PROJECT=your_project_name
-export WANDB_ENTITY=your_username
-export WANDB_API_KEY=your_api_key
+export WANDB_PROJECT=BindCraft
+export WANDB_ENTITY=stefmenzies-lancaster-university
+export WANDB_API_KEY=20c7dbd2196d09dfa1144bf9389190ff9cb2b8ce
 # Activate the environment
 source activate bindcraft_env
 
