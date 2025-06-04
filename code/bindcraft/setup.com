@@ -13,7 +13,7 @@ module load miniconda
 
 # Create a new conda environment if not already created
 if ! conda env list | grep -q bindcraft_env; then
-    conda create -y -n bindcraft_env python=3.11
+    conda create -y -n bindcraft_env python=3.11 
 fi
 
 # Activate the environment
