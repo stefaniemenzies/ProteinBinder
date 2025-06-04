@@ -28,7 +28,7 @@ def install_bindcraft_components():
             url = "https://storage.googleapis.com/alphafold/alphafold_params_2022-12-06.tar"
             tar_path = "alphafold_params_2022-12-06.tar"
             print("Downloading AlphaFold params...")
-            downloader = SmartDL(url, tar_path)
+            downloader = SmartDL(url)
             downloader.start(block=True)
             print("Download complete.")
 
