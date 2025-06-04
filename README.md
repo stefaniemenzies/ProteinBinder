@@ -35,7 +35,30 @@ This will launch on your local machine.
 
 ### Running on HPC
 if you want to run the script on an HPC cluster, running slurm, after building a python environment, you can use the following command:
+#### Setting Up HEC 3.0
+Firstly, the code needs to be on HEC, which can best be done with git, so we'll load that in:
 
+```bash
+module add git
+```
+
+Then we'll grab the repo 
+
+```bash
+cd $global_storage
+git clone https://github.com/st7ma784/ProteinBinder
+cd ProteinBinder
+```
+
+From here, we're in the main folder, so we'll navigate to our scripts: 
+
+```bash
+cd code
+cd bindcraft
+```
+Onto the exciting part:
+
+#### Running
 ```bash
 sbatch setup.com
 ```
@@ -45,7 +68,9 @@ to download useful data files, and then run the launch script:
 sbatch launch.com
 ```
 
+### Results
 
+bindcraft is currently set up to log results to WandB, to enable this logging, edit launch.com, or launch.py directly.
 
 
 ## Running notebooks locally
