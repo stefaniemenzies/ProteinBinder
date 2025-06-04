@@ -9,7 +9,7 @@
 #SBATCH --mem=16G
 
 # Load necessary modules (if required)
-module load miniconda
+module load opence
 
 cd $global_storage/ProteinBinder/code/bindcraft
 # Create a new conda environment if not already created in global_Storage path
@@ -24,3 +24,5 @@ python -m pip install -r requirements.txt --no-cache-dir
 
 # Run setup.py
 python setup.py
+
+##should take about 10 minutes to run

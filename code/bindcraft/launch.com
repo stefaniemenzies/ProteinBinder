@@ -10,7 +10,7 @@
 #SBATCH --mem=32G
 
 # Load necessary modules (if required)
-module load miniconda
+module load opence
 
 export WANDB_PROJECT=your_project_name
 export WANDB_ENTITY=your_username
