@@ -21,5 +21,5 @@ export LANG=utf8
 # Load necessary modules (if required)
 module add miniforge/20240923
 source activate pyrosetta
-pip install -r requirements.txt --no-cache-dir
+# pip install -r requirements.txt --no-cache-dir
 python launch.py
