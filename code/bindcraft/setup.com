@@ -9,18 +9,16 @@
 #SBATCH --mem=16G
 
 # Load necessary modules (if required)
-module load opence
+module add miniforge/20240923
+source activate pyrosetta
+export LANG=utf8
 
 cd $global_storage/ProteinBinder/code/bindcraft
-# Create a new conda environment if not already created in global_Storage path
-conda create -y --prefix $global_storage/bindcraft_env python=3.13
 
-export TMPDIR=$global_storage/bindcraft_env/tmp #needed for pyrosetta! 
-# Activate the environment
-conda activate $global_storage/bindcraft_env
 
 # Install pip requirements
 python -m pip install -r requirements.txt --no-cache-dir
+
 
 # Run setup.py
 python setup.py

@@ -51,8 +51,8 @@ def install_bindcraft_components():
     else:
         print("BindCraft components already installed, ready to run!")
 
-    import pyrosetta_installer
-    pyrosetta_installer.install_pyrosetta(serialization=True,use_setup_py_package=False) #about 1.7 GB. 
+    # import pyrosetta_installer
+    # pyrosetta_installer.install_pyrosetta(serialization=True,use_setup_py_package=False) #about 1.7 GB. 
 
 if __name__ == "__main__":
     install_bindcraft_components()

@@ -10,12 +10,16 @@
 #SBATCH --mem=32G
 
 # Load necessary modules (if required)
-module load opence
 
 export WANDB_PROJECT=your_project_name
 export WANDB_ENTITY=your_username
 export WANDB_API_KEY=your_api_key
-# Activate the environment
-conda activate $global_storage/bindcraft_env
+export LANG=utf8
 
+# Activate the environment
+
+# Load necessary modules (if required)
+module add miniforge/20240923
+source activate pyrosetta
+pip install -r requirements.txt --no-cache-dir
 python launch.py
